@@ -1,0 +1,106 @@
+
+  .navbar-nav {
+    .nav-link {
+      padding-right: .5rem;
+      padding-left: .5rem;
+      color: $bd-purple-light;
+
+      &.active,
+      &:hover {
+        color: #fff;
+        background-color: transparent;
+      }
+
+      &.active {
+        font-weight: 500;
+      }
+    }
+  }
+
+  .navbar-nav-svg {
+    display: inline-block;
+    width: 1rem;
+    height: 1rem;
+    vertical-align: text-top;
+  }
+
+  .dropdown-menu {
+    font-size: .875rem;
+  }
+
+  .dropdown-item.active {
+    font-weight: 500;
+    color: $gray-900;
+    background-color: #add5fd!important;
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3E%3Cpath fill='%23292b2c' d='M2.3 6.73L.6 4.53c-.4-1.04.46-1.4 1.1-.8l1.1 1.4 3.4-3.8c.6-.63 1.6-.27 1.2.7l-4 4.6c-.43.5-.8.4-1.1.1z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: .4rem .6rem;
+    background-size: .75rem .75rem;
+  }
+  .bg-light {
+    background-color: #add5fd!important;
+  }
+  .aplic .image{
+    background:  url('./images/inicio.jpg');
+    background-size:cover
+  }
+   .aplic .image2{
+    background:  url('./images/informes.jpeg');
+    background-size:cover
+  }
+  
+  .image-preview-input {
+    position: relative;
+	overflow: hidden;
+	margin: 0px;    
+    color: #333;
+    background-color: #fff;
+    border-color: #ccc;    
+}
+.image-preview-input input[type=file] {
+	position: absolute;
+	top: 0;
+	right: 0;
+	margin: 0;
+	padding: 0;
+	font-size: 20px;
+	cursor: pointer;
+	opacity: 0;
+	filter: alpha(opacity=0);
+}
+.image-preview-input-title {
+    margin-left:2px;
+}
+.aplic .jumbotron{
+		background-color:#072a4ca1;
+	    margin-top: 48px;
+	    color: white;
+}
+.aplic .header{
+	background-color:white;
+	text-align: right;
+    padding-right: 44px;
+}
+.aplic .footer{
+	background-color: #343a40;
+    height: 7rem;
+    color:white;
+    width :100%
+}
+.aplic .fieldset {
+	padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    background: rgba(173, 213, 253, 0.35);
+    border:1px solid #1076bd;
+}
+
+.aplic .cargaInformes {
+	max-width: 100%;
+    padding-right: 40px;
+    padding-left: 40px;
+    padding-bottom: 40px;
+    padding-top: 40px;
+    
+}

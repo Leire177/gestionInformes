@@ -1,0 +1,1 @@
+<script type="text/javascript" src="../resources/js/gesInformesBasico.js"></script>
