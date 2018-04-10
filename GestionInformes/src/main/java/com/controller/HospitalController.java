@@ -24,6 +24,7 @@ public class HospitalController {
 
 	@RequestMapping(value = "/getAll", method = RequestMethod.GET)
 	public @ResponseBody() List<Hospital> getHospitales(Model model) {
+		HospitalController.LOGGER.info("[getAll]");
 		List<Hospital> lista = this.hospitalService.getAll();
 		model.addAttribute("listaHospitales", lista);
 		return lista;

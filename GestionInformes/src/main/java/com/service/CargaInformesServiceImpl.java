@@ -40,7 +40,7 @@ public class CargaInformesServiceImpl implements CargaInformesService {
 	@Autowired()
 	private InformeEnfermedadDao informeEnfermedadDao;
 
-	public int procesarFicheros(MultipartFile[] files, Hospital hospital) {
+	public List<Informe> procesarFicheros(MultipartFile[] files, Hospital hospital) {
 
 		/**
 		 * MIRAR SI ES ANN O TXT INSERTAR EN DOS LISTAS DISTINTAS ANN Y TXT RECORRER
@@ -86,9 +86,6 @@ public class CargaInformesServiceImpl implements CargaInformesService {
 						informe.setContenidoANN(multipartFileANN);
 						informe.setContenidoTXT(multipartFileTXT);
 
-						// PROCESAR FECHA
-						// IF ES CORRECTA(SET FECHA) ELSE BOOLEAN ESigual =FALSE PARA METERLO EN
-						// INCORRECTOS
 						Object result = this.procesarFecha(nombreANN);
 						if (result != null) {
 							informe.setFecha((Date) result);
@@ -113,7 +110,7 @@ public class CargaInformesServiceImpl implements CargaInformesService {
 		}
 		this.addRelacionEnfermedad(resultado);
 		this.addRelacionMedicamento(resultado);
-		return 0;
+		return informesErroneos;
 	}
 
 	private Object procesarFecha(String nombreInforme) throws ParseException {

@@ -18,44 +18,44 @@
 				class="btn btn-outline-info float-md-right">
 		</form>
 	</fieldset>
-	<div id="tablaIncorrectos" style="display:none;">
-	<fieldset class="fieldset">
-		<table class="table table-hover">
+	<c:if test="${feedback eq true}">
+		<div class="alert alert-success" style="margin-top: 15px;">
+			<strong>Correcto!</strong> Todos los informes se han cargado correctamente.
+		</div>
+	</c:if>
+	<c:if test="${not empty listaErroneos}">
+		<div class="alert alert-warning" style="margin-top: 15px;">
+			<strong>Cuidado!</strong> Los siguientes informes no han podido ser
+			cargados. Revise que el nombre del archivo sea correcto y que se ha
+			adjuntado su correspondiente fichero.txt .
+		</div>
+		<div id="tablaIncorrectos">
+			<fieldset class="fieldset">
+				<table class="tableAplic table table-hover">
 
-			<!--Table head-->
-			<thead>
-				<tr>
-					<th>#</th>
-					<th>First Name</th>
-					<th>Last Name</th>
-					<th>Username</th>
-				</tr>
-			</thead>
-			<!--Table head-->
+					<!--Table head-->
+					<thead>
+						<tr>
+							<th>#</th>
+							<th>Informe</th>
+						</tr>
+					</thead>
+					<!--Table head-->
 
-			<!--Table body-->
-			<tbody>
-				<tr>
-					<th scope="row">1</th>
-					<td>Mark</td>
-					<td>Otto</td>
-					<td>@mdo</td>
-				</tr>
-				<tr>
-					<th scope="row">2</th>
-					<td>Jacob</td>
-					<td>Thornton</td>
-					<td>@fat</td>
-				</tr>
-				<tr>
-					<th scope="row">3</th>
-					<td colspan="2">Larry the Bird</td>
-					<td>@twitter</td>
-				</tr>
-			</tbody>
-			<!--Table body-->
+					<!--Table body-->
+					<tbody>
+						<c:forEach items="${listaErroneos}" var="erroneo" varStatus="loop">
+							<tr>
+								<th scope="row">${loop.index + 1}</th>
+								<td>${erroneo.nombreInforme}</td>
 
-		</table>
-		</fieldset>
-	</div>
+							</tr>
+						</c:forEach>
+					</tbody>
+					<!--Table body-->
+
+				</table>
+			</fieldset>
+		</div>
+	</c:if>
 </div>
