@@ -41,14 +41,23 @@
     background-color: #add5fd!important;
   }
   .aplic .image{
-    background:  url('./images/inicio.jpg');
+    background:  url('./images/doctor-office.jpg');
     background-size:cover
   }
    .aplic .image2{
     background:  url('./images/informes.jpeg');
     background-size:cover
   }
-  
+  .blockUI .imgLoadMessage {
+    vertical-align: middle;
+}
+
+.blockUI .loadText {
+	line-height: 10vw;
+    font-size: 5vw;
+    color: #1e4f5b;
+}
+
   .image-preview-input {
     position: relative;
 	overflow: hidden;
@@ -83,7 +92,7 @@
 }
 .aplic .footer{
 	background-color: #343a40;
-    height: 7rem;
+    height: 10rem;
     color:white;
     width :100%
 }
@@ -91,7 +100,6 @@
 	padding-left: 15px;
     padding-right: 15px;
     padding-top: 15px;
-    padding-bottom: 15px;
     background: rgba(173, 213, 253, 0.35);
     border:1px solid #1076bd;
 }
@@ -110,3 +118,13 @@
 .table {
 	background-color:  #ffffffba !important;
 }
+.aplic .btn-outline-info {
+    color: #1076bd;
+    background-color: #ffffffba;
+    background-image: none;
+    border-color: #1076bd;
+}
+.aplic .btn-outline-info:hover {
+    color: #fff;
+    background-color: #3e788f;
+    border-color: #3e788f;

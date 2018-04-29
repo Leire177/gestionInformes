@@ -1,9 +1,9 @@
 package com.model;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.springframework.web.multipart.MultipartFile;
 
@@ -16,8 +16,8 @@ public class Informe implements Serializable {
 	private Date fecha;
 	private Hospital hospital;
 	private String nombreInforme;
-	private List<Enfermedad> listaEnfermedades;
-	private List<Medicamento> listaMedicamentos;
+	private Map<String, Enfermedad> listaEnfermedades;
+	private Map<String, Medicamento> listaMedicamentos;
 
 	/**
 	 * @return the id
@@ -115,9 +115,9 @@ public class Informe implements Serializable {
 	/**
 	 * @return the listaEnfermedades
 	 */
-	public List<Enfermedad> getListaEnfermedades() {
+	public Map<String, Enfermedad> getListaEnfermedades() {
 		if (this.listaEnfermedades == null) {
-			this.listaEnfermedades = new ArrayList<Enfermedad>();
+			this.listaEnfermedades = new HashMap<String, Enfermedad>();
 		}
 		return listaEnfermedades;
 	}
@@ -126,16 +126,16 @@ public class Informe implements Serializable {
 	 * @param listaEnfermedades
 	 *            the listaEnfermedades to set
 	 */
-	public void setListaEnfermedades(List<Enfermedad> listaEnfermedades) {
+	public void setListaEnfermedades(Map<String, Enfermedad> listaEnfermedades) {
 		this.listaEnfermedades = listaEnfermedades;
 	}
 
 	/**
 	 * @return the listaMedicamentos
 	 */
-	public List<Medicamento> getListaMedicamentos() {
+	public Map<String, Medicamento> getListaMedicamentos() {
 		if (this.listaMedicamentos == null) {
-			this.listaMedicamentos = new ArrayList<Medicamento>();
+			this.listaMedicamentos = new HashMap<String, Medicamento>();
 		}
 		return listaMedicamentos;
 	}
@@ -144,7 +144,7 @@ public class Informe implements Serializable {
 	 * @param listaMedicamentos
 	 *            the listaMedicamentos to set
 	 */
-	public void setListaMedicamentos(List<Medicamento> listaMedicamentos) {
+	public void setListaMedicamentos(Map<String, Medicamento> listaMedicamentos) {
 		this.listaMedicamentos = listaMedicamentos;
 	}
 

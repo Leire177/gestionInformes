@@ -8,8 +8,12 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -29,6 +33,7 @@ import com.model.Medicamento;
 
 @Service(value = "CargaInformesService")
 public class CargaInformesServiceImpl implements CargaInformesService {
+	private static final Logger LOGGER = LoggerFactory.getLogger(CargaInformesServiceImpl.class);
 	@Autowired()
 	private CargaInformesDao cargaInformesDao;
 	@Autowired()
@@ -55,8 +60,6 @@ public class CargaInformesServiceImpl implements CargaInformesService {
 
 		List<MultipartFile> informesANN = new ArrayList<MultipartFile>();
 		List<MultipartFile> informesTXT = new ArrayList<MultipartFile>();
-		List<MultipartFile> informesANNCorrectos = new ArrayList<MultipartFile>();
-		List<MultipartFile> informesANNerroneos = new ArrayList<MultipartFile>();
 		List<Informe> informesCorrectos = new ArrayList<Informe>();
 		List<Informe> informesErroneos = new ArrayList<Informe>();
 		for (int i = 0; i < files.length; i++) {
@@ -95,7 +98,6 @@ public class CargaInformesServiceImpl implements CargaInformesService {
 					} catch (Exception e) {
 						// TODO: handle exception
 					}
-
 				}
 			}
 			if (esIgual) {
@@ -148,6 +150,7 @@ public class CargaInformesServiceImpl implements CargaInformesService {
 
 	private List<Informe> procesar(List<Informe> informes) {
 		for (Informe informe : informes) {
+			List<Enfermedad> enfermedadEspecial = new ArrayList<Enfermedad>();
 			MultipartFile file = informe.getContenidoANN();
 			try {
 				InputStream inputStream = file.getInputStream();
@@ -157,13 +160,36 @@ public class CargaInformesServiceImpl implements CargaInformesService {
 				while ((line = bufferedReader.readLine()) != null) {
 					// PROCESAR FICHERO
 					if (line.contains("Grp_Enfermedad:")) {
+
 						// LINEA ESPECIAL
 						String[] linea = line.split("\\t");
 
 						if (linea[1].contains("Causada_por")) {
 							String[] a = linea[1].split(" ");
 							String e = a[0];
+							Enfermedad enf = new Enfermedad();
+							for (String string : a) {
+								if (string.contains("Grp_Enfermedad:")) {
+									String[] enfs = string.split("Grp_Enfermedad:");
+									enf.setIdEnInforme(enfs[enfs.length - 1]);
+								}
+								if (string.contains("Causada_por")) {
+									String[] meds = string.split(":");
+									Medicamento med = new Medicamento();
+									med.setIdEnInforme(meds[meds.length - 1]);
+									enf.getCausadoPor().add(med);
+								}
+							}
+							enfermedadEspecial.add(enf);
 						}
+						// else {
+						// String[] a = linea[1].split("\\t");
+						// Enfermedad e = new Enfermedad();
+						// e.setIdEnInforme(a[0]);
+						// String[] enfs = a[1].split(":");
+						// System.out.println(enfs[0]);
+						//
+						// }
 
 					} else if (line.contains("Grp_Enfermedad")) {
 						String[] linea = line.split("\\t");
@@ -171,7 +197,7 @@ public class CargaInformesServiceImpl implements CargaInformesService {
 						enf.setIdEnInforme(linea[0]);
 						enf.setDescripcion(linea[2]);
 						Enfermedad enfermedad = this.procesarEnfermedad(enf);
-						informe.getListaEnfermedades().add(enfermedad);
+						informe.getListaEnfermedades().put(linea[0], enfermedad);
 
 					} else if (line.contains("Grp_Medicamento")) {
 						String[] linea = line.split("\\t");
@@ -179,12 +205,63 @@ public class CargaInformesServiceImpl implements CargaInformesService {
 						med.setIdEnInforme(linea[0]);
 						med.setDescripcion(linea[2]);
 						Medicamento medicamento = this.procesarMedicamento(med);
-						informe.getListaMedicamentos().add(medicamento);
+						informe.getListaMedicamentos().put(linea[0], medicamento);
 					}
 
 				}
+
+				// PROCESAR ENFERMEDAD CAUSADA POR
+				// FALLA PORQUE CUANDO RECORRES UNA QUE A SU VEZ APUNTA A OTRA ENFERMEDAD NO SE
+				// ENCUENTRA EN EL ARRAY PORQUE
+				// NO SE HA PROCESADO ANTES eJEMPLO E3 Grp_Enfermedad:T4 Tratamiento:T13
+				// Causada_por:E8 Causada_por2:E1 Tratamiento2:T12
+				// Grp_Enfermedad:T1 Tratamiento:T13
+				Iterator iteraEnfEspecial = enfermedadEspecial.iterator();
+				// for (Enfermedad enfEspecial : enfermedadEspecial) {
+				while (iteraEnfEspecial.hasNext()) {
+					Enfermedad enf = (Enfermedad) iteraEnfEspecial.next();
+					Enfermedad aux = informe.getListaEnfermedades().get(enf.getIdEnInforme());
+					enf.setDescripcion(aux.getDescripcion());
+					enf.setId(aux.getId());
+
+					// for (Medicamento med : enfEspecial.getCausadoPor()) {
+					// if (informe.getListaMedicamentos().containsKey(med.getIdEnInforme())) {
+					// Medicamento medAux =
+					// informe.getListaMedicamentos().get(med.getIdEnInforme());
+					// med.setDescripcion(medAux.getDescripcion());
+					// med.setId(medAux.getId());
+					// } else {
+					// // Si no existe en la lista de medicamentos,porque realmente es una
+					// enfermedad,
+					// // se bora de la lista
+					//
+					// }
+					//
+					// }
+					Iterator itera = enf.getCausadoPor().iterator();
+
+					while (itera.hasNext()) {
+
+						Medicamento med = (Medicamento) itera.next();
+						System.out.println(enf.getDescripcion() + " " + enf.getIdEnInforme());
+						if (informe.getListaMedicamentos().containsKey(med.getIdEnInforme())) {
+							Medicamento medAux = informe.getListaMedicamentos().get(med.getIdEnInforme());
+							med.setDescripcion(medAux.getDescripcion());
+							med.setId(medAux.getId());
+
+						} else {
+							iteraEnfEspecial.remove();
+							break;
+						}
+					}
+
+				}
+				enfermedadEspecial.size();
+				// INSERTAR RELACION ENFERMEDAD CAUSADA POR MEDICAMENTOS
+
 			} catch (Exception e) {
 				// TODO: handle exception
+				CargaInformesServiceImpl.LOGGER.info("[Error] " + e);
 			}
 
 		}
@@ -221,10 +298,11 @@ public class CargaInformesServiceImpl implements CargaInformesService {
 
 	private void addRelacionEnfermedad(List<Informe> informes) {
 		for (Informe inf : informes) {
-			for (Enfermedad enf : inf.getListaEnfermedades()) {
+			// for (Enfermedad enf : inf.getListaEnfermedades()) {
+			for (Map.Entry<String, Enfermedad> entry : inf.getListaEnfermedades().entrySet()) {
 				InformeEnfermedad informe = new InformeEnfermedad();
 				informe.setIdInforme(inf.getId());
-				informe.setIdEnfermedad(enf.getId());
+				informe.setIdEnfermedad(entry.getValue().getId());
 				InformeEnfermedad aux = this.informeEnfermedadDao.find(informe);
 				if (aux == null) {
 					this.informeEnfermedadDao.addRelacionEnfermedad(informe);
@@ -235,10 +313,11 @@ public class CargaInformesServiceImpl implements CargaInformesService {
 
 	private void addRelacionMedicamento(List<Informe> informes) {
 		for (Informe inf : informes) {
-			for (Medicamento med : inf.getListaMedicamentos()) {
+			// for (Medicamento med : inf.getListaMedicamentos()) {
+			for (Map.Entry<String, Medicamento> entry : inf.getListaMedicamentos().entrySet()) {
 				InformeMedicamento informe = new InformeMedicamento();
 				informe.setIdInforme(inf.getId());
-				informe.setIdMedicamento(med.getId());
+				informe.setIdMedicamento(entry.getValue().getId());
 				InformeMedicamento aux = this.informeMedicamentoDao.find(informe);
 				if (aux == null) {
 					this.informeMedicamentoDao.addRelacionEnfermedad(informe);

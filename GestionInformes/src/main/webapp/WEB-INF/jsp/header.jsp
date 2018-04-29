@@ -1,3 +1,3 @@
 <div class="header">
-	<h2>Gestion de informes</h2>
+	<h2>Gestión de informes</h2>
 </div>  

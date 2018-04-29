@@ -1,6 +1,11 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <div id="subidaFicheros" class="cargaInformes image2">
+<c:if test="${feedback eq true}">
+		<div class="alert alert-success" style="margin-top: 15px;">
+			<strong>Correcto!</strong> Todos los informes se han cargado correctamente.
+		</div>
+	</c:if>
 	<fieldset class="fieldset">
 		<form id="cargaFicherosForm"
 			action="/GestionInformes/cargaInformes/uploadFiles" method="post"
@@ -15,19 +20,15 @@
 					name="id" class="form-control"></select>
 			</div>
 			<input id="submit" type="submit" tabindex="5" value="Cargar ficheros"
-				class="btn btn-outline-info float-md-right">
+				class="btn btn-outline-info float-md-right" style="margin-bottom: 15px;">
 		</form>
 	</fieldset>
-	<c:if test="${feedback eq true}">
-		<div class="alert alert-success" style="margin-top: 15px;">
-			<strong>Correcto!</strong> Todos los informes se han cargado correctamente.
-		</div>
-	</c:if>
+	
 	<c:if test="${not empty listaErroneos}">
 		<div class="alert alert-warning" style="margin-top: 15px;">
 			<strong>Cuidado!</strong> Los siguientes informes no han podido ser
-			cargados. Revise que el nombre del archivo sea correcto y que se ha
-			adjuntado su correspondiente fichero.txt .
+			cargados. Revise que el nombre del archivo sea correcto, que se ha
+			adjuntado su correspondiente fichero.txt y cárguelos nuevamente.
 		</div>
 		<div id="tablaIncorrectos">
 			<fieldset class="fieldset">

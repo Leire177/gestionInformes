@@ -1,5 +1,5 @@
 jQuery(document).ready(function($) {
-
+bloquearPantalla();
 	 $.ajax({
          url: "/GestionInformes/hospitales/getAll",
          datatype : "application/json",
@@ -23,5 +23,5 @@ jQuery(document).ready(function($) {
 		    }
 		  }
 		});
-	 
+desbloquearPantalla(); 
 });
