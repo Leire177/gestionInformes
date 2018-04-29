@@ -74,14 +74,25 @@ public class CargaInformesDaoImpl implements CargaInformesDao {
 
 	}
 
+	public int findCausadoPor(Integer idInforme, Integer idEnfermedad, Integer idMedicamento) {
+		StringBuilder sql = new StringBuilder(
+				"SELECT COUNT(1) FROM CAUSADO_POR WHERE IDINFORME=? AND IDENFERMEDAD=? AND IDMEDICAMENTO=?");
+		List<Object> params = new ArrayList<Object>();
+		params.add(idInforme);
+		params.add(idEnfermedad);
+		params.add(idMedicamento);
+		return this.jdbcTemplate.queryForObject(sql.toString(), params.toArray(), Integer.class);
+	}
+
+	public void addCausadoPor(Integer idInforme, Integer idEnfermedad, Integer idMedicamento) {
+		StringBuilder sql = new StringBuilder(
+				"INSERT INTO CAUSADO_POR(IDINFORME,IDENFERMEDAD,IDMEDICAMENTO) VALUES(?,?,?)");
+		this.jdbcTemplate.update(sql.toString(), idInforme, idEnfermedad, idMedicamento);
+	}
+
 	public Informe add(Informe informe) {
-		// List<Object> params = new ArrayList<Object>();
 		StringBuilder sql = new StringBuilder("INSERT INTO INFORMES(IDHOSPITAL,FECHA,FICHERO_TXT,FICHERO_ANN)");
 		sql.append(" VALUES (?,?,?,?) ");
-		// params.add(informe.getHospital().getId());
-		// params.add(informe.getFecha());
-		// params.add(informe.getContenidoTXT());
-		// params.add(informe.getContenidoANN());
 		this.jdbcTemplate.update(sql.toString(), informe.getHospital().getId(), informe.getFecha(),
 				informe.getContenidoTXT(), informe.getContenidoANN());
 

@@ -1,8 +1,10 @@
 package com.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.web.multipart.MultipartFile;
@@ -18,6 +20,7 @@ public class Informe implements Serializable {
 	private String nombreInforme;
 	private Map<String, Enfermedad> listaEnfermedades;
 	private Map<String, Medicamento> listaMedicamentos;
+	private List<Enfermedad> enfermedadesEspeciales;
 
 	/**
 	 * @return the id
@@ -146,6 +149,24 @@ public class Informe implements Serializable {
 	 */
 	public void setListaMedicamentos(Map<String, Medicamento> listaMedicamentos) {
 		this.listaMedicamentos = listaMedicamentos;
+	}
+
+	/**
+	 * @return the enfermedadesEspeciales
+	 */
+	public List<Enfermedad> getEnfermedadesEspeciales() {
+		if (this.enfermedadesEspeciales == null) {
+			this.enfermedadesEspeciales = new ArrayList<Enfermedad>();
+		}
+		return enfermedadesEspeciales;
+	}
+
+	/**
+	 * @param enfermedadesEspeciales
+	 *            the enfermedadesEspeciales to set
+	 */
+	public void setEnfermedadesEspeciales(List<Enfermedad> enfermedadesEspeciales) {
+		this.enfermedadesEspeciales = enfermedadesEspeciales;
 	}
 
 }

@@ -112,6 +112,7 @@ public class CargaInformesServiceImpl implements CargaInformesService {
 		}
 		this.addRelacionEnfermedad(resultado);
 		this.addRelacionMedicamento(resultado);
+		this.procesarCausadoPor(resultado);
 		return informesErroneos;
 	}
 
@@ -160,7 +161,6 @@ public class CargaInformesServiceImpl implements CargaInformesService {
 				while ((line = bufferedReader.readLine()) != null) {
 					// PROCESAR FICHERO
 					if (line.contains("Grp_Enfermedad:")) {
-
 						// LINEA ESPECIAL
 						String[] linea = line.split("\\t");
 
@@ -182,14 +182,6 @@ public class CargaInformesServiceImpl implements CargaInformesService {
 							}
 							enfermedadEspecial.add(enf);
 						}
-						// else {
-						// String[] a = linea[1].split("\\t");
-						// Enfermedad e = new Enfermedad();
-						// e.setIdEnInforme(a[0]);
-						// String[] enfs = a[1].split(":");
-						// System.out.println(enfs[0]);
-						//
-						// }
 
 					} else if (line.contains("Grp_Enfermedad")) {
 						String[] linea = line.split("\\t");
@@ -210,34 +202,13 @@ public class CargaInformesServiceImpl implements CargaInformesService {
 
 				}
 
-				// PROCESAR ENFERMEDAD CAUSADA POR
-				// FALLA PORQUE CUANDO RECORRES UNA QUE A SU VEZ APUNTA A OTRA ENFERMEDAD NO SE
-				// ENCUENTRA EN EL ARRAY PORQUE
-				// NO SE HA PROCESADO ANTES eJEMPLO E3 Grp_Enfermedad:T4 Tratamiento:T13
-				// Causada_por:E8 Causada_por2:E1 Tratamiento2:T12
-				// Grp_Enfermedad:T1 Tratamiento:T13
 				Iterator iteraEnfEspecial = enfermedadEspecial.iterator();
-				// for (Enfermedad enfEspecial : enfermedadEspecial) {
 				while (iteraEnfEspecial.hasNext()) {
 					Enfermedad enf = (Enfermedad) iteraEnfEspecial.next();
 					Enfermedad aux = informe.getListaEnfermedades().get(enf.getIdEnInforme());
 					enf.setDescripcion(aux.getDescripcion());
 					enf.setId(aux.getId());
 
-					// for (Medicamento med : enfEspecial.getCausadoPor()) {
-					// if (informe.getListaMedicamentos().containsKey(med.getIdEnInforme())) {
-					// Medicamento medAux =
-					// informe.getListaMedicamentos().get(med.getIdEnInforme());
-					// med.setDescripcion(medAux.getDescripcion());
-					// med.setId(medAux.getId());
-					// } else {
-					// // Si no existe en la lista de medicamentos,porque realmente es una
-					// enfermedad,
-					// // se bora de la lista
-					//
-					// }
-					//
-					// }
 					Iterator itera = enf.getCausadoPor().iterator();
 
 					while (itera.hasNext()) {
@@ -256,17 +227,31 @@ public class CargaInformesServiceImpl implements CargaInformesService {
 					}
 
 				}
-				enfermedadEspecial.size();
+				informe.setEnfermedadesEspeciales(enfermedadEspecial);
 				// INSERTAR RELACION ENFERMEDAD CAUSADA POR MEDICAMENTOS
 
 			} catch (Exception e) {
-				// TODO: handle exception
 				CargaInformesServiceImpl.LOGGER.info("[Error] " + e);
 			}
 
 		}
 
 		return informes;
+	}
+
+	private void procesarCausadoPor(List<Informe> informes) {
+		for (Informe inf : informes) {
+			// for (Enfermedad enf : inf.getListaEnfermedades()) {
+			for (Enfermedad enf : inf.getEnfermedadesEspeciales()) {
+				for (Medicamento med : enf.getCausadoPor()) {
+					int count = this.cargaInformesDao.findCausadoPor(inf.getId(), enf.getId(), med.getId());
+					if (count == 0) {
+						this.cargaInformesDao.addCausadoPor(inf.getId(), enf.getId(), med.getId());
+					}
+
+				}
+			}
+		}
 	}
 
 	private Enfermedad procesarEnfermedad(Enfermedad enfermedad) {
