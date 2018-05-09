@@ -1,71 +1,65 @@
+.navbar-dark .navbar-nav .active>.nav-link, .navbar-dark .navbar-nav .nav-link.active,
+	.navbar-dark .navbar-nav .nav-link.show, .navbar-dark .navbar-nav .show>.nav-link
+	{
+	color: #fff;
+	margin-right: 10px;
+}
 
-  .navbar-nav {
-    .nav-link {
-      padding-right: .5rem;
-      padding-left: .5rem;
-      color: $bd-purple-light;
+.navbar-nav-svg {
+	display: inline-block;
+	width: 1rem;
+	height: 1rem;
+	vertical-align: text-top;
+}
 
-      &.active,
-      &:hover {
-        color: #fff;
-        background-color: transparent;
-      }
+.dropdown-menu {
+	font-size: .875rem;
+}
 
-      &.active {
-        font-weight: 500;
-      }
-    }
-  }
+.dropdown-item.active {
+	font-weight: 500;
+	color: $gray-900;
+	background-color: #add5fd !important;
+	background-image:
+		url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3E%3Cpath fill='%23292b2c' d='M2.3 6.73L.6 4.53c-.4-1.04.46-1.4 1.1-.8l1.1 1.4 3.4-3.8c.6-.63 1.6-.27 1.2.7l-4 4.6c-.43.5-.8.4-1.1.1z'/%3E%3C/svg%3E");
+	background-repeat: no-repeat;
+	background-position: .4rem .6rem;
+	background-size: .75rem .75rem;
+}
 
-  .navbar-nav-svg {
-    display: inline-block;
-    width: 1rem;
-    height: 1rem;
-    vertical-align: text-top;
-  }
+.bg-light {
+	background-color: #add5fd !important;
+}
 
-  .dropdown-menu {
-    font-size: .875rem;
-  }
+.aplic .image {
+	background: url('./images/doctor-office.jpg');
+	background-size: cover
+}
 
-  .dropdown-item.active {
-    font-weight: 500;
-    color: $gray-900;
-    background-color: #add5fd!important;
-    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3E%3Cpath fill='%23292b2c' d='M2.3 6.73L.6 4.53c-.4-1.04.46-1.4 1.1-.8l1.1 1.4 3.4-3.8c.6-.63 1.6-.27 1.2.7l-4 4.6c-.43.5-.8.4-1.1.1z'/%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position: .4rem .6rem;
-    background-size: .75rem .75rem;
-  }
-  .bg-light {
-    background-color: #add5fd!important;
-  }
-  .aplic .image{
-    background:  url('./images/doctor-office.jpg');
-    background-size:cover
-  }
-   .aplic .image2{
-    background:  url('./images/informes.jpeg');
-    background-size:cover
-  }
-  .blockUI .imgLoadMessage {
-    vertical-align: middle;
+.aplic .image2 {
+	background: url('./images/m.jpg');
+	background-size: cover
+}
+
+.blockUI .imgLoadMessage {
+	vertical-align: middle;
 }
 
 .blockUI .loadText {
 	line-height: 10vw;
-    font-size: 5vw;
-    color: #1e4f5b;
+	font-size: 5vw;
+	color: #1e4f5b;
 }
 
-  .image-preview-input {
-    position: relative;
+.image-preview-input {
+	position: relative;
 	overflow: hidden;
-	margin: 0px;    
-    color: #333;
-    background-color: #fff;
-    border-color: #ccc;    
+	margin: 0px;
+	color: #333;
+	background-color: #fff;
+	border-color: #ccc;
 }
+
 .image-preview-input input[type=file] {
 	position: absolute;
 	top: 0;
@@ -75,56 +69,120 @@
 	font-size: 20px;
 	cursor: pointer;
 	opacity: 0;
-	filter: alpha(opacity=0);
+	filter: alpha(opacity = 0);
 }
+
 .image-preview-input-title {
-    margin-left:2px;
+	margin-left: 2px;
 }
-.aplic .jumbotron{
-		background-color:#072a4ca1;
-	    margin-top: 48px;
-	    color: white;
+
+.aplic .jumbotron {
+	background-color: #072a4ca1;
+	margin-top: 48px;
+	color: white;
 }
-.aplic .header{
-	background-color:white;
+
+.aplic .header {
+	background-color: white;
 	text-align: right;
-    padding-right: 44px;
+	padding-right: 44px;
 }
-.aplic .footer{
+
+.aplic .footer {
 	background-color: #343a40;
-    height: 10rem;
-    color:white;
-    width :100%
+	color: white;
+	width: 100%;
+	text-align: center;
 }
+
 .aplic .fieldset {
-	padding-left: 15px;
-    padding-right: 15px;
-    padding-top: 15px;
-    background: rgba(173, 213, 253, 0.35);
-    border:1px solid #1076bd;
+	margin: 10px 10px 10px 10px;
+	padding: 15px 15px 15px 15px;
+	background: rgba(173, 213, 253, 0.35);
+	border: 1px solid #1076bd;
 }
 
 .aplic .cargaInformes {
 	max-width: 100%;
-    padding-right: 40px;
-    padding-left: 40px;
-    padding-bottom: 40px;
-    padding-top: 40px;
-    
+	padding-right: 40px;
+	padding-left: 40px;
+	padding-bottom: 40px;
+	padding-top: 40px;
+	heigth: 590px;
 }
+
+.aplic #inicio {
+	height: auto;
+}
+
 .aplic .tableAplic {
-	background-color:  #ffffffba !important;
+	background-color: #ffffffba !important;
 }
+
 .table {
-	background-color:  #ffffffba !important;
+	background-color: #ffffffba !important;
 }
+
 .aplic .btn-outline-info {
-    color: #1076bd;
-    background-color: #ffffffba;
-    background-image: none;
-    border-color: #1076bd;
+	color: #1076bd;
+	background-color: #ffffffba;
+	background-image: none;
+	border-color: #1076bd;
 }
+
 .aplic .btn-outline-info:hover {
-    color: #fff;
-    background-color: #3e788f;
-    border-color: #3e788f;
+	color: #fff;
+	background-color: #3e788f;
+	border-color: #3e788f;
+}
+
+.aplic .alert-success {
+	background-color: #8affa6 !important;
+}
+
+.aplic .alert-warning {
+	background-color: #f5e3ac !important
+}
+
+.aplic .form-group {
+	padding: 16px 5px 5px 5px;
+}
+
+.aplic .botonAdd {
+	background: url(./images/addIcon.png) no-repeat center left;
+	backgroud-size: 65px
+}
+
+.aplic .form-inline .form-control {
+	width: 100%;
+}
+
+.aplic .fas {
+	color: white;
+	margin-right: 5px;
+}
+
+.aplic .nav-link {
+	margin-rigth: 10px;
+}
+
+.aplic .gj-icon, .gj-textbox-md {
+	color: #3f788f;
+}
+
+.aplic .gj-textbox-md {
+	border-bottom: 1px solid #3f788f
+}
+
+.aplic .logo {
+	width: 172px;
+	margin-top: -15px;
+	margin-bottom: -9px;
+	margin-right: 26px;
+}
+
+.aplic .imfFooter {
+	margin: auto;
+	display: block;
+	width: 284px;
+}

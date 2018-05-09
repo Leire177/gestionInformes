@@ -29,18 +29,25 @@
       <div class="collapse navbar-collapse" id="navbarsExample03">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item active">
-            <a class="nav-link" href="${contextPath}/inicio/maint">Inicio <span class="sr-only"></span></a>
+          
+            <a class="nav-link" href="${contextPath}/inicio/maint"><i class="fas fa-home"></i>Inicio <span class="sr-only"></span></a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="${contextPath}/cargaInformes/maint">Carga de informes</a>
+          <li class="nav-item active">
+          
+            <a class="nav-link" href="${contextPath}/cargaInformes/maint"><i class="fas fa-cogs"></i>Carga de informes</a>
           </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="" id="dropdown03" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Información estadística</a>
+          <li class="nav-item dropdown active">
+         
+            <a class="nav-link dropdown-toggle" href="" id="dropdown03" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="fas fa-chart-bar"></i>Información estadística</a>
             <div class="dropdown-menu" aria-labelledby="dropdown03">
-              <a class="dropdown-item" href="#">Búsqueda básica</a>
-              <a class="dropdown-item" href="#">Búsqueda relacionada</a>
+              <a class="dropdown-item" href="${contextPath}/gesInformesBasico/maint">Búsqueda básica</a>
+              <a class="dropdown-item" href="#">Búsqueda avanzada</a>
             </div>
           </li>
+          
         </ul>
+        <ul class="nav navbar-nav navbar-right">
+    	<li><img src="../resources/css/images/logo4.png" class="logo" ></li>
+    </ul>
       </div>
     </nav>

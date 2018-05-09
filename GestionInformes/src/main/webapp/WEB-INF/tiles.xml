@@ -16,12 +16,18 @@
     <definition name="inicio" extends="base.definition">  
         <put-attribute name="title" value="Inicio" />  
         <put-attribute name="body" value="/WEB-INF/jsp/inicio.jsp" />  
+         <put-attribute name="includes" value="/WEB-INF/jsp/inicio-includes.jsp" />  
     </definition> 
      <definition name="cargaInformes" extends="base.definition">  
         <put-attribute name="title" value="Carga Informes" />  
         <put-attribute name="body" value="/WEB-INF/jsp/cargaInformes/cargaInformes.jsp" />
         <put-attribute name="includes" value="/WEB-INF/jsp/cargaInformes/cargaInformes-includes.jsp" />  
-    </definition>  
+    </definition> 
+    <definition name="gesInformesBasico" extends="base.definition">  
+        <put-attribute name="title" value="Informacion estadística" />  
+        <put-attribute name="body" value="/WEB-INF/jsp/gesInformesBasico/gesInformesBasico.jsp" />
+        <put-attribute name="includes" value="/WEB-INF/jsp/gesInformesBasico/gesInformesBasico-includes.jsp" />  
+    </definition>   
   
     <definition name="hello" extends="base.definition">  
         <put-attribute name="title" value="Hello Spring MVC" />  
