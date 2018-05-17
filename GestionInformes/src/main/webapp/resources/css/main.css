@@ -37,7 +37,7 @@
 }
 
 .aplic .image2 {
-	background: url('./images/m.jpg');
+	background: url('./images/fondoazul.jpg');
 	background-size: cover
 }
 
@@ -137,7 +137,7 @@
 }
 
 .aplic .alert-success {
-	background-color: #8affa6 !important;
+	background-color: #c0ffcf !important;
 }
 
 .aplic .alert-warning {

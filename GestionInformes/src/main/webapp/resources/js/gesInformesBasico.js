@@ -1,45 +1,71 @@
 var formLength=0;
-jQuery(document).ready(function($) {
-	var ctx = document.getElementById("myChart").getContext('2d');
-	var myChart = new Chart(ctx, {
+function crearGrafico(data){
+//	$("#myChart").remove();
+//	""
+	var fechas = new Array();
+	var numInformes = new Array();
+	
+ for(var i = 0;i<data.length;i++){
+	 fechas.push(data[i].fecha);
+// fechas.push(i);
+	 numInformes.push(data[i].numInformes);
+ }
+	 if($("#opcionGrafico").val()=="bars"){
+		 crearGraficoBar(fechas,numInformes);
+	 }else{
+		 crearGraficoLine(fechas,numInformes);
+	 }
+}
+function crearGraficoLine(fechas,numInformes){
+	new Chart(document.getElementById("myChart"), {
+		  type: 'line',
+		  data: {
+		    labels: fechas,
+		    datasets: [{ 
+		        data: numInformes,
+		        label: "Nº Informes",
+		        borderColor: "#3e95cd",
+		        fill: false
+		      }
+		    ]
+		  },
+		  options: {
+		    title: {
+		      display: true,
+		      text: ''
+		    },
+		    responsive:true
+		  }
+		});
+}
+function crearGraficoBar(fechas,numInformes){
+	new Chart(document.getElementById("myChart"), {
 	    type: 'bar',
 	    data: {
-	        labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
-	        datasets: [{
-	            label: '# of Votes',
-	            data: [12, 19, 3, 5, 2, 3],
-	            backgroundColor: [
-	                'rgba(255, 99, 132, 0.2)',
-	                'rgba(54, 162, 235, 0.2)',
-	                'rgba(255, 206, 86, 0.2)',
-	                'rgba(75, 192, 192, 0.2)',
-	                'rgba(153, 102, 255, 0.2)',
-	                'rgba(255, 159, 64, 0.2)'
-	            ],
-	            borderColor: [
-	                'rgba(255,99,132,1)',
-	                'rgba(54, 162, 235, 1)',
-	                'rgba(255, 206, 86, 1)',
-	                'rgba(75, 192, 192, 1)',
-	                'rgba(153, 102, 255, 1)',
-	                'rgba(255, 159, 64, 1)'
-	            ],
-	            borderWidth: 1
-	        }]
+	    	labels: fechas,
+	      datasets: [
+	        {
+	          label: "Nº Informes",
+	          backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
+	          data:numInformes
+	        }
+	      ]
 	    },
 	    options: {
-	        scales: {
-	            yAxes: [{
-	                ticks: {
-	                    beginAtZero:true
-	                }
-	            }]
-	        }
+	      legend: { display: false },
+	      title: {
+	        display: true,
+	        responsive:true,
+	        text: ''
+	      }
 	    }
 	});
 	
+}
+jQuery(document).ready(function($) {
+	
+	
 	function confPlantillaMed(){
-		debugger;
 		var long = formLength;
 
 	    $('<div/>', {
@@ -55,6 +81,14 @@ jQuery(document).ready(function($) {
 	        e.stopImmediatePropagation();
 			confPlantillaMed();
 		})
+		$('[id=botonRemoveMed_'+formLength+']').on("click",function(e){
+	    	e.preventDefault();
+	        e.stopImmediatePropagation();
+	        debugger;
+	        var id=$(this).attr("id");
+	        var nombre = id.split("_");
+	        $('[id=formularioMed_'+nombre[1]+']').remove();
+		})
 		
 		
 		
@@ -62,7 +96,6 @@ jQuery(document).ready(function($) {
 
 	}
 	function confPlantillaEnf(){
-		debugger;
 		var long = formLength;
 
 	    $('<div/>', {
@@ -77,12 +110,19 @@ jQuery(document).ready(function($) {
 			e.preventDefault();
 	        e.stopImmediatePropagation();
 			confPlantillaEnf();
+		});
+		$('[id=botonRemoveEnf_'+formLength+']').on("click",function(e){
+	    	e.preventDefault();
+	        e.stopImmediatePropagation();
+	        debugger;
+	        var id=$(this).attr("id");
+	        var nombre = id.split("_");
+	        $('[id=formularioEnf_'+nombre[1]+']').remove();
 		})
 	    formLength++;
 	}
 	function confPlantillaBase(){
 		var long = formLength;
-		debugger;
 	    $('<div/>', {
 	        'class' : 'formulario form-inline','id':'formularioEnf_'+long,html: GetHtmlEnf()
 	    }).hide().appendTo('#divEnf');
@@ -102,13 +142,15 @@ jQuery(document).ready(function($) {
 	        e.stopImmediatePropagation();
 			confPlantillaEnf();
 		})
+		$("#botonRemoveEnf_0").hide();
+	    $("#botonRemoveMed_0").hide();
 	    formLength++;
 	}
 	function GetHtmlMed(){
 		var len =formLength;
 		var $html = $('.formularioTemplateMed').clone().prop('id', 'formularioMed_'+len );
 		
-		$html.find('[id=medicamento]').attr("id", "medicamento_" + len).attr("name", "medicamento" + len);
+		$html.find('[id=medicamento]').attr("id", "medicamento_" + len).attr("name", "listaMedsFiltro.descripcion");
 		$html.find('[id=botonAddMed]').attr("id", "botonAddMed_" + len);
 		$html.find('[id=botonRemoveMed]').attr("id", "botonRemoveMed_" + len);
 
@@ -118,7 +160,7 @@ jQuery(document).ready(function($) {
 		var len =formLength;
 		var $html = $('.formularioTemplateEnf').clone().prop('id', 'formularioEnf_'+len );
 		
-		$html.find('[id=enfermedad]').attr("id", "enfermedad_" + len).attr("name", "enfermedad" + len);
+		$html.find('[id=enfermedad]').attr("id", "enfermedad_" + len).attr("name", "listaEnfsFiltro.descripcion");
 		$html.find('[id=botonAddEnf]').attr("id", "botonAddEnf_" + len);
 		$html.find('[id=botonRemoveEnf]').attr("id", "botonRemoveEnf_" + len);
 
@@ -150,7 +192,57 @@ jQuery(document).ready(function($) {
         e.stopImmediatePropagation();
         confPlantillaEnf();
 	})
-	  $('#fechaDesde').datepicker();
-	 $('#fechaHasta').datepicker();
+	$('#fechaDesde').datepicker({
+	    format: 'dd/mm/yyyy'
+	 });
+	$('#fechaHasta').datepicker({
+	    format: 'dd/mm/yyyy'
+	 });
+	$("#opcionGrafico").on("change",function(e){
+		 $("#botonFiltrar").click();
+	});
+	 $("#botonFiltrar").on("click",function(e){
+	    	// /SUBMIT
+		 bloquearPantalla();
+		 var datos= new Object();
+		 var enfs= new Array();
+		 var meds= new Array();
+		 $("input[id^='enfermedad_']").each(function(i){
+			 var enfermedad = new Object();
+			 enfermedad.descripcion = $(this).val();
+			 enfs.push(enfermedad);
+		 }); 
+		 $("input[id^='medicamento_']").each(function(i){
+			 var medicamento = new Object();
+			 medicamento.descripcion = $(this).val();
+			 meds.push(medicamento);
+		 });
+		 var hosp = new Object();
+		 var fechaD = $("#fechaDesde").val();
+		 var fechaH = $("#fechaHasta").val();
+		 hosp.id = $("#listaHospitales").val();
+		 datos={
+				 listaEnfsFiltro: enfs, 
+				 listaMedsFiltro:meds, 
+				 hospital:hosp
+				  ,fechaDesde:fechaD, fechaHasta:fechaH
+				 };
+		 $.ajax({
+		        url: "/GestionInformes/gesInformesBasico/filtroBasico",
+		        type: "POST"
+		        , contentType: "application/json"
+				, data:JSON.stringify(datos)
+		        ,async: false,
+		        success: function (data) {
+		        	desbloquearPantalla();
+		        	crearGrafico(data);
+		        	$("#fieldsetGrafico").show();
+		        },
+		        error(jqXHR, textStatus, errorThrown) {
+		        	desbloquearPantalla();
+		            alert('Something wrong happened because: ' + errorThrown)
+		        }
+		    });
+		})
 desbloquearPantalla(); 
 });

@@ -128,7 +128,7 @@ public class EnfermedadesDaoImpl implements EnfermedadesDao {
 
 	public Enfermedad insertar(Enfermedad enfermedad) {
 		String query = "INSERT INTO ENFERMEDADES (DESCRIPCION) VALUES (?)";
-		this.jdbcTemplate.update(query, enfermedad.getDescripcion());
+		this.jdbcTemplate.update(query, enfermedad.getDescripcion().toUpperCase());
 		return enfermedad;
 	}
 

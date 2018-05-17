@@ -124,7 +124,7 @@ public class MedicamentosDaoImpl implements MedicamentosDao {
 
 	public Medicamento insertar(Medicamento medicamento) {
 		String query = "INSERT INTO MEDICAMENTOS (DESCRIPCION) VALUES (?)";
-		this.jdbcTemplate.update(query, medicamento.getDescripcion());
+		this.jdbcTemplate.update(query, medicamento.getDescripcion().toUpperCase());
 		return medicamento;
 	}
 

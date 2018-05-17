@@ -7,7 +7,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.codehaus.jackson.map.annotate.JsonDeserialize;
+import org.codehaus.jackson.map.annotate.JsonSerialize;
 import org.springframework.web.multipart.MultipartFile;
+
+import com.common.JsonDateDeserializer;
+import com.common.JsonDateSerializer;
 
 public class Informe implements Serializable {
 
@@ -21,6 +26,11 @@ public class Informe implements Serializable {
 	private Map<String, Enfermedad> listaEnfermedades;
 	private Map<String, Medicamento> listaMedicamentos;
 	private List<Enfermedad> enfermedadesEspeciales;
+	private List<Enfermedad> listaEnfsFiltro;
+	private List<Enfermedad> listaMedsFiltro;
+	private String fechaDesde;
+	private String fechaHasta;
+	private Integer numInformes;
 
 	/**
 	 * @return the id
@@ -40,6 +50,7 @@ public class Informe implements Serializable {
 	/**
 	 * @return the fecha
 	 */
+	@JsonSerialize(using = JsonDateSerializer.class)
 	public Date getFecha() {
 		return fecha;
 	}
@@ -48,6 +59,7 @@ public class Informe implements Serializable {
 	 * @param fecha
 	 *            the fecha to set
 	 */
+	@JsonDeserialize(using = JsonDateDeserializer.class)
 	public void setFecha(Date fecha) {
 		this.fecha = fecha;
 	}
@@ -167,6 +179,85 @@ public class Informe implements Serializable {
 	 */
 	public void setEnfermedadesEspeciales(List<Enfermedad> enfermedadesEspeciales) {
 		this.enfermedadesEspeciales = enfermedadesEspeciales;
+	}
+
+	/**
+	 * @return the fechaDesde
+	 */
+	// @JsonSerialize(using = JsonDateSerializer.class)
+	public String getFechaDesde() {
+		return fechaDesde;
+	}
+
+	/**
+	 * @param fechaDesde
+	 *            the fechaDesde to set
+	 */
+	// @JsonDeserialize(using = JsonDateDeserializer.class)
+	public void setFechaDesde(String fechaDesde) {
+		this.fechaDesde = fechaDesde;
+	}
+
+	/**
+	 * @return the fechaHasta
+	 */
+	// @JsonSerialize(using = JsonDateSerializer.class)
+	public String getFechaHasta() {
+		return fechaHasta;
+	}
+
+	/**
+	 * @param fechaHasta
+	 *            the fechaHasta to set
+	 */
+	// @JsonDeserialize(using = JsonDateDeserializer.class)
+	public void setFechaHasta(String fechaHasta) {
+		this.fechaHasta = fechaHasta;
+	}
+
+	/**
+	 * @return the listaEnfsFiltro
+	 */
+	public List<Enfermedad> getListaEnfsFiltro() {
+		return listaEnfsFiltro;
+	}
+
+	/**
+	 * @param listaEnfsFiltro
+	 *            the listaEnfsFiltro to set
+	 */
+	public void setListaEnfsFiltro(List<Enfermedad> listaEnfsFiltro) {
+		this.listaEnfsFiltro = listaEnfsFiltro;
+	}
+
+	/**
+	 * @return the listaMedsFiltro
+	 */
+	public List<Enfermedad> getListaMedsFiltro() {
+		return listaMedsFiltro;
+	}
+
+	/**
+	 * @param listaMedsFiltro
+	 *            the listaMedsFiltro to set
+	 */
+	public void setListaMedsFiltro(List<Enfermedad> listaMedsFiltro) {
+		this.listaMedsFiltro = listaMedsFiltro;
+	}
+
+	/**
+	 * @return the numInformes
+	 */
+	public Integer getNumInformes() {
+		return numInformes;
+	}
+
+	/**
+	 * @param numInformes
+	 *            the numInformes to set
+	 */
+	public void setNumInformes(Integer numInformes) {
+		this.numInformes = numInformes;
 	}
 
 }
