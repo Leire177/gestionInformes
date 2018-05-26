@@ -98,7 +98,7 @@
 .aplic .fieldset {
 	margin: 10px 10px 10px 10px;
 	padding: 15px 15px 15px 15px;
-	background: rgba(173, 213, 253, 0.35);
+	background: #a6cdde52;
 	border: 1px solid #1076bd;
 }
 
@@ -185,4 +185,38 @@
 	margin: auto;
 	display: block;
 	width: 284px;
+}
+.aplic .label{
+	color: #343a40;
+    font-weight: bold;
+}
+.blockUI .imgLoadMessage {
+    vertical-align: middle;
+    margin-right: 2rem;
+    margin-bottom: 1vw;
+}
+
+.blockUI .loadText {
+	line-height: 10vw;
+    font-size: 6vw;
+    color: #ba1944;
+}
+
+.blockUI img {
+	height: 8vw;
+	width: auto;
+	font-size: 6vw;
+	color: #ba1944;
+}
+.aplic-fade.in {
+	opacity: 1;
+}
+
+.aplic-fade {
+	opacity: 0;
+	-webkit-transition: opacity 0.5s ease;
+	-moz-transition: opacity 0.5s ease;
+	-o-transition: opacity 0.5s ease;
+	-ms-transition: opacity 0.5s ease;
+	transition: opacity 0.5s ease;
 }

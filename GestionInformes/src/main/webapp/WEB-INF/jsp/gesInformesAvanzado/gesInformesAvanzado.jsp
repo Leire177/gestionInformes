@@ -1,45 +1,40 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<div id="gesInformes" class="cargaInformes">
-	<div class="formularioTemplateEnf" id="formularioEnf"
-		style="display: none">
+<div id="gesInformesAvanzado" class="cargaInformes">
+	<div class="formularioTemplate" id="formulario" style="display: none">
 
 		<input type="hidden" name="id" class="form-control" id="id" />
-		<div class="col-md-9">
-			<input id="enfermedad" name="listaEnfsFiltro.descripcion"
-				class="form-control">
-		</div>
-		<!-- 				<div class="col-md-4"> -->
-		<img id="botonAddEnf" src="../resources/css/images/addIcon.png"
-			style="width: 74px; margin-left: -12px;"> <img
-			id="botonRemoveEnf" src="../resources/css/images/removeIcon.png"
-			style="width: 74px; margin-left: -30px;">
-		<!-- 					</div> -->
-	</div>
-	<div class="formularioTemplateMed" id="formularioMed"
-		style="display: none">
-
-		<input type="hidden" name="id" class="form-control" id="id" />
-		<div class="col-md-9">
+		<div class="col-md-4">
 			<input id="medicamento" name="listaMedsFiltro.descripcion"
 				class="form-control">
 		</div>
-		<img id="botonAddMed" src="../resources/css/images/addIcon.png"
-			style="width: 74px; margin-left: -12px;"> <img
-			id="botonRemoveMed" src="../resources/css/images/removeIcon.png"
+		<div class="col-md-2">
+			<select id="relEnfMed" class="form-control" disabled="disabled">
+				<option value="1">Causado por</option>
+			</select>
+		</div>
+		<div class="col-md-4">
+			<input id="enfermedad" name="listaMedsFiltro.descripcion"
+				class="form-control">
+		</div>
+		<img id="botonAdd" src="../resources/css/images/addIcon.png"
+			style="width: 74px; margin-left: -12px;"> <img id="botonRemove"
+			src="../resources/css/images/removeIcon.png"
 			style="width: 74px; margin-left: -30px;">
 	</div>
 	<fieldset class="fieldset">
 		<form id="listaEnf_form" class="form-horizontal">
 
 			<div class="form-row">
-				<div id="divEnf" class="col-md-6">
+				<div id="divEnf" class="col-md-4">
 					<label for="enfLabel" class="control-label col-md-6">Enfermedad</label>
 				</div>
-				<div id="divMed" class="col-md-6">
+				<div id="divEnf" class="col-md-2"></div>
+				<div id="divMed" class="col-md-4">
 					<label for="medLabel" class="control-label col-md-6">Medicamento</label>
 				</div>
 			</div>
+			<div id="lineas"></div>
 
 			<div class="form-group">
 				<div class="form-row">
@@ -75,13 +70,14 @@
 				</div>
 			</div>
 			<div class="float-md-right">
-			<input id="botonFiltrar" type="button" tabindex="5" value="Filtrar"
-				class="btn btn-outline-info "
-				style="margin-bottom: 15px;"> <input id="botonLimpiar"
-				type="button" tabindex="5" value="Limpiar"
-				class="btn btn-outline-info"
-				style="margin-bottom: 15px;">
-		</div>
+				<input id="botonFiltrar" type="button" tabindex="5" value="Filtrar"
+					class="btn btn-outline-info"
+					style="margin-bottom: 15px;"> <input id="botonLimpiar"
+					type="button" tabindex="5" value="Limpiar"
+					class="btn btn-outline-info"
+					style="margin-bottom: 15px;">
+			</div>
+
 		</form>
 	</fieldset>
 	<fieldset id="fieldsetGrafico" style="display: none;" class="fieldset">
@@ -91,17 +87,8 @@
 				<option value="bars">Gráfico de barras</option>
 			</select>
 		</div>
-		<div>
-			<select id="opcionFechas" class="form-control">
-				<option value="anyos">Años</option>
-				<option value="meses">Meses</option>
-				<option value="dias">Días</option>
-			</select>
-		</div>
-		<div id="crearCamvas" class="col-md-7" >
-		<div>
+		<div id="crearCamvas" class="col-md-6 text-center">
 			<canvas id="myChart"></canvas>
-		</div>
 		</div>
 	</fieldset>
 </div>

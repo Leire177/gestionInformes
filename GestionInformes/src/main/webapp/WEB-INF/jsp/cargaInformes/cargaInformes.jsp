@@ -1,6 +1,6 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<div id="subidaFicheros" class="cargaInformes image2">
+<div id="subidaFicheros" class="cargaInformes">
 <c:if test="${feedback eq true}">
 		<div class="alert alert-success" style="margin-top: 15px;">
 			<strong>Correcto!</strong> Todos los informes se han cargado correctamente.

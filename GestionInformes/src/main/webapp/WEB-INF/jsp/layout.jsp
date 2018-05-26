@@ -30,7 +30,7 @@
 <title><tiles:insertAttribute name="title" ignore="true" /></title>  
 </head>  
 <body>  
- 	<div class="aplic">
+ 	<div id="bodyClass" class="aplic aplic-fade">
 		<div class="contenedor">
 			<!-- Cabecera -->
 			<tiles:insertAttribute name="header" />

@@ -31,6 +31,8 @@ public class Informe implements Serializable {
 	private String fechaDesde;
 	private String fechaHasta;
 	private Integer numInformes;
+	private String fechaStr;
+	private String order;
 
 	/**
 	 * @return the id
@@ -258,6 +260,36 @@ public class Informe implements Serializable {
 	 */
 	public void setNumInformes(Integer numInformes) {
 		this.numInformes = numInformes;
+	}
+
+	/**
+	 * @return the fechaStr
+	 */
+	public String getFechaStr() {
+		return fechaStr;
+	}
+
+	/**
+	 * @param fechaStr
+	 *            the fechaStr to set
+	 */
+	public void setFechaStr(String fechaStr) {
+		this.fechaStr = fechaStr;
+	}
+
+	/**
+	 * @return the order
+	 */
+	public String getOrder() {
+		return order;
+	}
+
+	/**
+	 * @param order
+	 *            the order to set
+	 */
+	public void setOrder(String order) {
+		this.order = order;
 	}
 
 }

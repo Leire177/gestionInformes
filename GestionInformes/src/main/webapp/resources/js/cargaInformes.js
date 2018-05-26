@@ -24,4 +24,5 @@ bloquearPantalla();
 		  }
 		});
 desbloquearPantalla(); 
+$('#bodyClass').addClass('in');
 });

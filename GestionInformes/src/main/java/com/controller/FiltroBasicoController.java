@@ -31,9 +31,7 @@ public class FiltroBasicoController {
 	}
 
 	@RequestMapping(value = "/filtroBasico", method = RequestMethod.POST)
-	public @ResponseBody() List<Informe> filtroBasico(
-			// @RequestBody(required = false) List<Map<String, Object>> editar
-			@RequestBody() Informe informe) {
+	public @ResponseBody() List<Informe> filtroBasico(@RequestBody() Informe informe) {
 		FiltroBasicoController.LOGGER.info("[filtroBasico]");
 		return this.gesInformesService.buscarFiltroBasico(informe);
 	}

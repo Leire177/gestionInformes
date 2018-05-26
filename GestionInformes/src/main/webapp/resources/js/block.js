@@ -1,6 +1,9 @@
-function bloquearPantalla(mensaje,callback){
+function bloquearPantalla(callback){
 	
-	mensaje = " Cargando...";
+	mensaje = "";
+	if(mensaje !== undefined && typeof mensaje === "string"){
+		localMensaje = mensaje;
+	}
 	
 	jQuery.blockUI({	
 		css: {
@@ -13,7 +16,7 @@ function bloquearPantalla(mensaje,callback){
 			    '-moz-border-radius': '0px',
 			    'border-radius': '0px',
 				'background-size': '12%',
-			    opacity: 0.8, 
+			    'opacity': '1', 
 			    color: '#F0256F'
 		}
 		, message: function(){

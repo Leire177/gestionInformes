@@ -15,6 +15,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.common.Constantes;
 import com.common.Funciones;
 import com.model.Informe;
 
@@ -31,7 +32,7 @@ public class GesInformesDaoImpl implements GesInformesDao {
 		public Informe mapRow(ResultSet resultSet, int rowNum) throws SQLException {
 			Informe bean = new Informe();
 			bean.setNumInformes(resultSet.getInt("NUMINFORMES"));
-			bean.setFecha(resultSet.getDate("FECHA"));
+			bean.setFechaStr(resultSet.getString("FECHA"));
 			return bean;
 		}
 	};
@@ -42,15 +43,34 @@ public class GesInformesDaoImpl implements GesInformesDao {
 
 	protected String getSelect() {
 		StringBuilder selectFichero = new StringBuilder();
-		selectFichero.append(" SELECT COUNT(FECHA) AS NUMINFORMES, FECHA ");
+		selectFichero.append("SELECT COUNT(ID) NUMINFORMES, DATE_FORMAT(FECHA,'%d/%m/%Y') as FECHA FROM (");
+		selectFichero.append(" SELECT T1.ID, T1.FECHA ");
 		return selectFichero.toString();
 
+	}
+
+	protected String getSelectAvanzado() {
+		StringBuilder selectFichero = new StringBuilder();
+		selectFichero.append("SELECT COUNT(ID) NUMINFORMES, FECHA FROM (");
+		selectFichero.append(" SELECT T1.ID, T1.FECHA ");
+		return selectFichero.toString();
+
+	}
+
+	protected String getFromAvanzado() {
+		StringBuilder from = new StringBuilder();
+		// from.append(" FROM INFORMES T1 JOIN HOSPITALES T2 ON T1.IDHOSPITAL = T2.ID");
+		// from.append(" LEFT JOIN ENFERMEDAD_INFORME T3 ON T1.ID = T3.IDINFORME");
+		// from.append(" JOIN ENFERMEDADES T5 ON T3.IDENFERMEDAD = T5.ID");
+		// from.append(" LEFT JOIN MEDICAMENTO_INFORME T4 ON T1.ID = T4.IDINFORME");
+		// from.append(" JOIN MEDICAMENTOS T6 ON T4.IDMEDICAMENTO = T6.ID");
+		return from.toString();
 	}
 
 	protected String getFrom() {
 		StringBuilder from = new StringBuilder();
 		from.append(" FROM INFORMES T1 JOIN HOSPITALES T2 ON T1.IDHOSPITAL = T2.ID");
-		from.append(" JOIN ENFERMEDAD_INFORME T3 ON T1.ID = T3.IDINFORME");
+		from.append(" LEFT JOIN ENFERMEDAD_INFORME T3 ON T1.ID = T3.IDINFORME");
 		from.append(" JOIN ENFERMEDADES T5 ON T3.IDENFERMEDAD = T5.ID");
 		from.append(" LEFT JOIN MEDICAMENTO_INFORME T4 ON T1.ID = T4.IDINFORME");
 		from.append(" JOIN MEDICAMENTOS T6 ON T4.IDMEDICAMENTO = T6.ID");
@@ -95,11 +115,11 @@ public class GesInformesDaoImpl implements GesInformesDao {
 		where.append(Funciones.generarWhereIn("T6.DESCRIPCION", listaMeds, params));
 
 		if (informe.getFechaDesde() != null && !"".equals(informe.getFechaDesde())) {
-			where.append("AND T1.FECHA > ?");
+			where.append("AND T1.FECHA >= ?");
 			params.add(Funciones.tratarFecha(informe.getFechaDesde()));
 		}
 		if (informe.getFechaHasta() != null && !"".equals(informe.getFechaHasta())) {
-			where.append(" AND T1.FECHA < ?");
+			where.append(" AND T1.FECHA <= ?");
 			params.add(Funciones.tratarFecha(informe.getFechaHasta()));
 		}
 		Map<String, Object> mapWhere = new HashMap<String, Object>();
@@ -118,15 +138,50 @@ public class GesInformesDaoImpl implements GesInformesDao {
 		StringBuilder where = new StringBuilder(" WHERE 1=1 ");
 		where.append(mapaWhere.get("query"));
 		sql.append(where);
-
+		sql.append(" GROUP BY T1.ID  ");
+		sql.append(" ORDER BY FECHA ASC ) AS T ");
 		List<?> params = (List<?>) mapaWhere.get("params");
-		sql.append(" GROUP BY FECHA  ");
-		sql.append(" ORDER BY FECHA ASC ");
+		if (Constantes.ORDEN_DIA.equals(informe.getOrder())) {
+			sql.append(" GROUP BY FECHA  ");
+			sql.append(" ORDER BY YEAR(FECHA), MONTH(FECHA), DAY(FECHA) ASC ");
+		} else if (Constantes.ORDEN_MES.equals(informe.getOrder())) {
+			sql.append(" GROUP BY YEAR(FECHA), MONTH(FECHA)  ");
+			sql.append(" ORDER BY YEAR(FECHA), MONTH(FECHA) ASC ");
+		} else {
+			sql.append(" GROUP BY YEAR(FECHA)  ");
+			sql.append(" ORDER BY YEAR(FECHA) ASC ");
+		}
 		return this.jdbcTemplate.query(sql.toString(), this.rwMap, params.toArray());
 	}
 
 	@Resource()
 	public void setDataSource(DataSource dataSource) {
 		this.jdbcTemplate = new JdbcTemplate(dataSource);
+	}
+
+	public List<Informe> getAllAvanzado(Informe informe) {
+		StringBuilder sql = new StringBuilder(this.getSelectAvanzado());
+		sql.append(this.getFromAvanzado());
+
+		Map<String, ?> mapaWhere = this.getWhereMap(informe);
+		StringBuilder where = new StringBuilder(" WHERE 1=1 ");
+		where.append(mapaWhere.get("query"));
+		sql.append(where);
+		sql.append(" GROUP BY T1.ID  ");
+		sql.append(" ORDER BY FECHA ASC ) AS T ");
+		List<?> params = (List<?>) mapaWhere.get("params");
+
+		if (Constantes.ORDEN_DIA.equals(informe.getOrder())) {
+			sql.append(" GROUP BY FECHA  ");
+			sql.append(" ORDER BY YEAR(FECHA), MONTH(FECHA), DAY(FECHA) ASC ");
+		} else if (Constantes.ORDEN_MES.equals(informe.getOrder())) {
+			sql.append(" GROUP BY YEAR(FECHA), MONTH(FECHA)  ");
+			sql.append(" ORDER BY YEAR(FECHA), MONTH(FECHA) ASC ");
+		} else {
+			sql.append(" GROUP BY YEAR(FECHA)  ");
+			sql.append(" ORDER BY YEAR(FECHA) ASC ");
+		}
+
+		return this.jdbcTemplate.query(sql.toString(), this.rwMap, params.toArray());
 	}
 }

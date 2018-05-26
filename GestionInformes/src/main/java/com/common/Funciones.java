@@ -67,21 +67,35 @@ public class Funciones {
 
 	public static String tratarFecha(String fecha) {
 		String rdo = "";
-		try {
-			Date date = formatearFecha(fecha);
-			rdo = obtFechaFormateada(date);
-		} catch (ParseException e) {
-			LOGGER.error("Funciones.tratarFecha", e);
-		}
+		Date date = formatearFecha(fecha);
+		rdo = obtFechaFormateada(date);
 		return rdo;
 	}
 
-	public static Date formatearFecha(String fecha) throws ParseException {
+	public static Date formatearFecha(String fecha) {
 		SimpleDateFormat formato;
 		formato = new SimpleDateFormat("dd/MM/yyyy");
 		Date date = null;
-		if (fecha != null) {
-			date = formato.parse(fecha);
+		try {
+			if (fecha != null) {
+				date = formato.parse(fecha);
+			}
+		} catch (ParseException e) {
+			LOGGER.error("Funciones.formatearFecha", e);
+		}
+		return date;
+	}
+
+	public static Date formatearFecha(String fecha, SimpleDateFormat format) {
+		SimpleDateFormat formato;
+		formato = format;
+		Date date = null;
+		try {
+			if (fecha != null) {
+				date = formato.parse(fecha);
+			}
+		} catch (ParseException e) {
+			LOGGER.error("Funciones.formatearFecha", e);
 		}
 		return date;
 	}
@@ -89,6 +103,16 @@ public class Funciones {
 	public static String obtFechaFormateada(Date fecha) {
 		SimpleDateFormat formato;
 		formato = new SimpleDateFormat("yyyy-MM-dd");
+		String date = "";
+		if (fecha != null) {
+			date = formato.format(fecha);
+		}
+		return date;
+	}
+
+	public static String obtFechaFormateada(Date fecha, SimpleDateFormat format) {
+		SimpleDateFormat formato;
+		formato = format;
 		String date = "";
 		if (fecha != null) {
 			date = formato.format(fecha);
