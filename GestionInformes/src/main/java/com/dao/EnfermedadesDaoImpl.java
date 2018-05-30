@@ -126,6 +126,15 @@ public class EnfermedadesDaoImpl implements EnfermedadesDao {
 		}
 	}
 
+	public List<Enfermedad> getAll() {
+		List<Object> params = new ArrayList<Object>();
+		StringBuilder sql = new StringBuilder(this.getSelect());
+		sql.append(this.getFrom());
+		sql.append(" WHERE 1 = 1 ");
+		sql.append(" ORDER BY DESCRIPCION ASC ");
+		return this.jdbcTemplate.query(sql.toString(), this.rwMap, params.toArray());
+	}
+
 	public Enfermedad insertar(Enfermedad enfermedad) {
 		String query = "INSERT INTO ENFERMEDADES (DESCRIPCION) VALUES (?)";
 		this.jdbcTemplate.update(query, enfermedad.getDescripcion().toUpperCase());

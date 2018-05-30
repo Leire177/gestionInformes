@@ -5,7 +5,7 @@
 
 		<input type="hidden" name="id" class="form-control" id="id" />
 		<div class="col-md-4">
-			<input id="medicamento" name="listaMedsFiltro.descripcion"
+			<input id="enfermedad" name="listaEnfssFiltro.descripcion"
 				class="form-control">
 		</div>
 		<div class="col-md-2">
@@ -14,7 +14,7 @@
 			</select>
 		</div>
 		<div class="col-md-4">
-			<input id="enfermedad" name="listaMedsFiltro.descripcion"
+			<input id="medicamento" name="listaMedsFiltro.descripcion"
 				class="form-control">
 		</div>
 		<img id="botonAdd" src="../resources/css/images/addIcon.png"
@@ -56,15 +56,15 @@
 							<label for="hospital">Fecha desde</label>
 						</div>
 						<div class="col-md-4">
-							<input id="fechaDesde" name="fechaDesde">
+							<input id="fechaDesde" name="fechaDesde" class="form-control">
 						</div>
 					</div>
 					<div class="col-md-6">
 						<div class="col-md-4">
-							<label for="fechaHasta">Fecha hasta</label>
+							<label for="fechahasta">Fecha hasta</label>
 						</div>
 						<div class="col-md-4">
-							<input id="fechaHasta" name="fechaHasta">
+							<input id="fechaHasta" name="fechaHasta" class="form-control">
 						</div>
 					</div>
 				</div>
@@ -85,6 +85,13 @@
 			<select id="opcionGrafico" class="form-control">
 				<option value="lines">Gráfico de lineas</option>
 				<option value="bars">Gráfico de barras</option>
+			</select>
+		</div>
+		<div>
+			<select id="opcionFechas" class="form-control">
+				<option value="anyos">Años</option>
+				<option value="meses">Meses</option>
+				<option value="dias">Días</option>
 			</select>
 		</div>
 		<div id="crearCamvas" class="col-md-6 text-center">

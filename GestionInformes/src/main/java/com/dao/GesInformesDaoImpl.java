@@ -51,7 +51,7 @@ public class GesInformesDaoImpl implements GesInformesDao {
 
 	protected String getSelectAvanzado() {
 		StringBuilder selectFichero = new StringBuilder();
-		selectFichero.append("SELECT COUNT(ID) NUMINFORMES, FECHA FROM (");
+		selectFichero.append("SELECT COUNT(ID) NUMINFORMES, DATE_FORMAT(FECHA,'%d/%m/%Y') AS FECHA FROM (");
 		selectFichero.append(" SELECT T1.ID, T1.FECHA ");
 		return selectFichero.toString();
 
@@ -59,11 +59,12 @@ public class GesInformesDaoImpl implements GesInformesDao {
 
 	protected String getFromAvanzado() {
 		StringBuilder from = new StringBuilder();
-		// from.append(" FROM INFORMES T1 JOIN HOSPITALES T2 ON T1.IDHOSPITAL = T2.ID");
-		// from.append(" LEFT JOIN ENFERMEDAD_INFORME T3 ON T1.ID = T3.IDINFORME");
-		// from.append(" JOIN ENFERMEDADES T5 ON T3.IDENFERMEDAD = T5.ID");
-		// from.append(" LEFT JOIN MEDICAMENTO_INFORME T4 ON T1.ID = T4.IDINFORME");
-		// from.append(" JOIN MEDICAMENTOS T6 ON T4.IDMEDICAMENTO = T6.ID");
+		from.append(" FROM INFORMES T1 JOIN HOSPITALES T2 ON T1.IDHOSPITAL = T2.ID");
+		from.append(" LEFT JOIN ENFERMEDAD_INFORME T3 ON T1.ID = T3.IDINFORME");
+		from.append(" JOIN ENFERMEDADES T5 ON T3.IDENFERMEDAD = T5.ID");
+		from.append(" LEFT JOIN MEDICAMENTO_INFORME T4 ON T1.ID = T4.IDINFORME");
+		from.append(" JOIN MEDICAMENTOS T6 ON T4.IDMEDICAMENTO = T6.ID");
+		from.append(" LEFT JOIN CAUSADO_POR T10 ON T10.IDINFORME = T1.ID ");
 		return from.toString();
 	}
 

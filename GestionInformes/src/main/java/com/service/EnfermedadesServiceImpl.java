@@ -1,5 +1,7 @@
 package com.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,5 +21,9 @@ public class EnfermedadesServiceImpl implements EnfermedadesService {
 
 	public Enfermedad insertar(Enfermedad enfermedad) {
 		return this.enfermedadesDao.insertar(enfermedad);
+	}
+
+	public List<Enfermedad> getAll() {
+		return this.enfermedadesDao.getAll();
 	}
 }

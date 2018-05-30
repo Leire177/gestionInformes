@@ -17,4 +17,8 @@ public class GesInformesServiceImpl implements GesInformesService {
 		return this.gesInformesDao.getAll(informe);
 	}
 
+	public List<Informe> buscarFiltroAvanzado(Informe informe) {
+		return this.gesInformesDao.getAllAvanzado(informe);
+	}
+
 }

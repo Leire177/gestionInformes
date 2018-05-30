@@ -6,4 +6,6 @@ import com.model.Informe;
 
 public interface GesInformesDao {
 	public List<Informe> getAll(Informe informe);
+
+	public List<Informe> getAllAvanzado(Informe informe);
 }

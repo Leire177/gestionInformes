@@ -7,4 +7,6 @@ import com.model.Informe;
 public interface GesInformesService {
 
 	public List<Informe> buscarFiltroBasico(Informe informe);
+
+	public List<Informe> buscarFiltroAvanzado(Informe informe);
 }

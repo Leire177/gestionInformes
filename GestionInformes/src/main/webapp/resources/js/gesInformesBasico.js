@@ -1,5 +1,49 @@
 var formLength=0;
 var grafico;
+var listaEnfermedades;
+var listaMedicmentos;
+function getListaEnfermedades(){
+	$.ajax({
+        url: "/GestionInformes/enfermedades/getAll",
+        datatype : "application/json",
+        type: "GET",
+        async: true,
+        success: function (data) {
+        listaEnfermedades = new Array();
+       	 for(var i=0; i<data.length;i++){
+       		 listaEnfermedades.push(data[i].descripcion);
+       	 }
+
+	 	$("#enfermedad_0").autocomplete({
+	 	    source: listaEnfermedades
+	 	  });
+        },
+        error(jqXHR, textStatus, errorThrown) {
+            alert('Something wrong happened because: ' + errorThrown)
+        }
+    });
+	
+}
+function getListaMedicamentos(){
+	$.ajax({
+        url: "/GestionInformes/medicamentos/getAll",
+        datatype : "application/json",
+        type: "GET",
+        async: true,
+        success: function (data) {
+        	listaMedicamentos = new Array();
+       	 for(var i=0; i<data.length;i++){
+       		 listaMedicamentos.push(data[i].descripcion);
+       	 }
+      	$("#medicamento_0").autocomplete({
+  	    source: listaMedicamentos
+  	  });
+        },
+        error(jqXHR, textStatus, errorThrown) {
+            alert('Something wrong happened because: ' + errorThrown)
+        }
+    });
+}
 function crearGrafico(data){
 	var fechas = new Array();
 	var numInformes = new Array();
@@ -146,8 +190,6 @@ function dibujarGrafico(fechas,numInformes){
 			grafico.update();
 		}
 	}	
-	
-	
 }
 function confPlantillaBase(){
 	var long = formLength;
@@ -217,7 +259,11 @@ function confPlantillaMed(){
         var nombre = id.split("_");
         $('[id=formularioMed_'+nombre[1]+']').remove();
 	})
-	
+	 if(formLength!=0){
+	    	$("#medicamento_"+formLength).autocomplete({
+	      	    source: listaMedicamentos
+	      	  });
+	    }
     formLength++;
 
 }
@@ -245,6 +291,11 @@ function confPlantillaEnf(){
         var nombre = id.split("_");
         $('[id=formularioEnf_'+nombre[1]+']').remove();
 	})
+	 if(formLength!=0){
+	    	$("#enfermedad_"+formLength).autocomplete({
+	      	    source: listaEnfermedades
+	      	  });
+	    }
     formLength++;
 }
 jQuery(document).ready(function($) {
@@ -277,10 +328,18 @@ jQuery(document).ready(function($) {
         confPlantillaEnf();
 	})
 	$('#fechaDesde').datepicker({
-	    format: 'dd/mm/yyyy'
+	    dateFormat: 'dd/mm/yy',
+	    changeYear: true
+//	    	showOn: "button",
+//	        buttonImage: "http://jqueryui.com/resources/demos/datepicker/images/calendar.gif",
+//	        buttonImageOnly: true
 	 });
 	$('#fechaHasta').datepicker({
-	    format: 'dd/mm/yyyy'
+		dateFormat: 'dd/mm/yy',
+		changeYear: true
+//		showOn: "button",
+//        buttonImage: "http://jqueryui.com/resources/demos/datepicker/images/calendar.gif",
+//        buttonImageOnly: true
 	 });
 	$("#opcionGrafico").on("change",function(e){
 		 $("#botonFiltrar").click();
@@ -344,7 +403,8 @@ jQuery(document).ready(function($) {
 				 }
 			  }
 		});
-		
+	 	getListaMedicamentos();
+		getListaEnfermedades();
 		desbloquearPantalla();
 		$('#bodyClass').addClass('in');
 });

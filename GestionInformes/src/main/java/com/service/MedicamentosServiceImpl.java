@@ -1,5 +1,7 @@
 package com.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,5 +21,9 @@ public class MedicamentosServiceImpl implements MedicamentosService {
 
 	public Medicamento insertar(Medicamento medicamento) {
 		return this.medicamentosDao.insertar(medicamento);
+	}
+
+	public List<Medicamento> getAll() {
+		return this.medicamentosDao.getAll();
 	}
 }

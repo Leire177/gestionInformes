@@ -122,6 +122,15 @@ public class MedicamentosDaoImpl implements MedicamentosDao {
 		}
 	}
 
+	public List<Medicamento> getAll() {
+		List<Object> params = new ArrayList<Object>();
+		StringBuilder sql = new StringBuilder(this.getSelect());
+		sql.append(this.getFrom());
+		sql.append(" WHERE 1 = 1 ");
+		sql.append(" ORDER BY DESCRIPCION ASC ");
+		return this.jdbcTemplate.query(sql.toString(), this.rwMap, params.toArray());
+	}
+
 	public Medicamento insertar(Medicamento medicamento) {
 		String query = "INSERT INTO MEDICAMENTOS (DESCRIPCION) VALUES (?)";
 		this.jdbcTemplate.update(query, medicamento.getDescripcion().toUpperCase());

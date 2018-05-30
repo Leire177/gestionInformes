@@ -61,7 +61,7 @@
 							<label for="hospital">Fecha desde</label>
 						</div>
 						<div class="col-md-4">
-							<input id="fechaDesde" name="fechaDesde">
+							<input id="fechaDesde" name="fechaDesde" class="form-control">
 						</div>
 					</div>
 					<div class="col-md-6">
@@ -69,7 +69,7 @@
 							<label for="fechaHasta">Fecha hasta</label>
 						</div>
 						<div class="col-md-4">
-							<input id="fechaHasta" name="fechaHasta">
+							<input id="fechaHasta" name="fechaHasta" class="form-control">
 						</div>
 					</div>
 				</div>
