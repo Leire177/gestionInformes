@@ -34,6 +34,8 @@
 <script type="text/javascript" src="${charts}"></script> 
 <spring:url value="/resources/js/jquery-ui.min.js" var="jsUI" />
 <script type="text/javascript" src="${jsUI}"></script> 
+<spring:url value="/resources/js/datepicker-es.js" var="jsUIEs" />
+<script type="text/javascript" src="${jsUIEs}"></script> 
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">  
 <title><tiles:insertAttribute name="title" ignore="true" /></title>  
 </head>  

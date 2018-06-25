@@ -8,8 +8,9 @@
 	</c:if>
 	<fieldset class="fieldset">
 		<form id="cargaFicherosForm"
-			action="/GestionInformes/cargaInformes/uploadFiles" method="post"
-			enctype="multipart/form-data">
+			action="/GestionInformes/cargaInformes/uploadFiles" method="post" 
+			enctype="multipart/form-data" 
+			>
 			<label for="informes">Informes</label>
 			<div class="form-group">
 				<input id="ficheros" name="ficheros" type="file"

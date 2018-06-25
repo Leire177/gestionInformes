@@ -52,18 +52,18 @@
 			<div class="form-group">
 				<div class="form-row">
 					<div class="col-md-6">
-						<div class="col-md-4">
+						<div class="col-md-6">
 							<label for="hospital">Fecha desde</label>
 						</div>
-						<div class="col-md-4">
+						<div class="col-md-6">
 							<input id="fechaDesde" name="fechaDesde" class="form-control">
 						</div>
 					</div>
 					<div class="col-md-6">
-						<div class="col-md-4">
+						<div class="col-md-6">
 							<label for="fechahasta">Fecha hasta</label>
 						</div>
-						<div class="col-md-4">
+						<div class="col-md-6">
 							<input id="fechaHasta" name="fechaHasta" class="form-control">
 						</div>
 					</div>

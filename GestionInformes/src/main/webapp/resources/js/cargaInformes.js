@@ -23,6 +23,13 @@ bloquearPantalla();
 		    }
 		  }
 		});
+	 
+	 
+	 $("#submit").click(function (event) {
+	        bloquearPantalla();
+	    });
+	 
+	 
 desbloquearPantalla(); 
 $('#bodyClass').addClass('in');
 });

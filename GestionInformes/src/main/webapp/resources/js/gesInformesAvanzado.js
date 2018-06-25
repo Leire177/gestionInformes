@@ -256,7 +256,8 @@ jQuery(document).ready(function($) {
             alert('Something wrong happened because: ' + errorThrown)
         }
     });
-	
+	$('#fechaDesde').datepicker( $.datepicker.regional[ "es" ] );
+	$('#fechaHasta').datepicker( $.datepicker.regional[ "es" ] );
 	$('#fechaDesde').datepicker({
 	    format: 'dd/mm/yyyy'
 	 });
@@ -314,7 +315,9 @@ jQuery(document).ready(function($) {
 		 $("#botonFiltrar").click();
 	});
 	
-	
+	$("#botonLimpiar").on("click",function(e){
+		 $("#listaEnf_form")[0].reset();
+	 });
 
 	getListaMedicamentos();
 	getListaEnfermedades();

@@ -73,37 +73,49 @@ public class CargaInformesServiceImpl implements CargaInformesService {
 				informesTXT.add(file);
 			}
 		}
-		for (MultipartFile multipartFileANN : informesANN) {
-			boolean esIgual = false;
-			Informe informe = new Informe();
-			informe.setNombreInforme(multipartFileANN.getOriginalFilename());
-			informe.setHospital(hospital);
+		if (informesANN.isEmpty()) {
 			for (MultipartFile multipartFileTXT : informesTXT) {
-				String nombreANN = multipartFileANN.getOriginalFilename().substring(0,
-						multipartFileANN.getOriginalFilename().length() - 4);
-				String nombreTXT = multipartFileTXT.getOriginalFilename().substring(0,
-						multipartFileTXT.getOriginalFilename().length() - 4);
-				if (nombreANN.equals(nombreTXT)) {
-					esIgual = true;
-					try {
-						informe.setContenidoANN(multipartFileANN);
-						informe.setContenidoTXT(multipartFileTXT);
+				Informe informe = new Informe();
+				informe.setNombreInforme(multipartFileTXT.getOriginalFilename());
+				informe.setHospital(hospital);
+				informesErroneos.add(informe);
+			}
+		} else {
 
-						Object result = this.procesarFecha(nombreANN);
-						if (result != null) {
-							informe.setFecha((Date) result);
-						} else {
-							esIgual = false;
+			for (MultipartFile multipartFileANN : informesANN) {
+				boolean esIgual = false;
+				Informe informe = new Informe();
+				informe.setNombreInforme(multipartFileANN.getOriginalFilename());
+				informe.setHospital(hospital);
+				for (MultipartFile multipartFileTXT : informesTXT) {
+					String nombreANN = multipartFileANN.getOriginalFilename().substring(0,
+							multipartFileANN.getOriginalFilename().length() - 4);
+					String nombreTXT = multipartFileTXT.getOriginalFilename().substring(0,
+							multipartFileTXT.getOriginalFilename().length() - 4);
+					if (nombreANN.equals(nombreTXT)) {
+						esIgual = true;
+						try {
+							informe.setContenidoANN(multipartFileANN);
+							informe.setContenidoTXT(multipartFileTXT);
+
+							Object result = this.procesarFecha(nombreANN);
+							if (result != null) {
+								informe.setFecha((Date) result);
+							} else {
+								esIgual = false;
+							}
+						} catch (Exception e) {
+							// TODO: handle exception
 						}
-					} catch (Exception e) {
-						// TODO: handle exception
 					}
 				}
-			}
-			if (esIgual) {
-				informesCorrectos.add(informe);
-			} else {
-				informesErroneos.add(informe);
+				if (esIgual) {
+					informesCorrectos.add(informe);
+
+					// TODO MIRAR SI EXISTE EL ID, Y SI EXISTE PONERLO COMO INCORRECTO
+				} else {
+					informesErroneos.add(informe);
+				}
 			}
 		}
 		List<Informe> resultado = this.procesar(informesCorrectos);
@@ -113,6 +125,7 @@ public class CargaInformesServiceImpl implements CargaInformesService {
 		this.addRelacionEnfermedad(resultado);
 		this.addRelacionMedicamento(resultado);
 		this.procesarCausadoPor(resultado);
+
 		return informesErroneos;
 	}
 

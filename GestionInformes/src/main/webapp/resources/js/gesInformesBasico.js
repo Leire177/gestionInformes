@@ -327,19 +327,17 @@ jQuery(document).ready(function($) {
         e.stopImmediatePropagation();
         confPlantillaEnf();
 	})
+	$('#fechaDesde').datepicker( $.datepicker.regional[ "es" ] );
+	$('#fechaHasta').datepicker( $.datepicker.regional[ "es" ] );
 	$('#fechaDesde').datepicker({
 	    dateFormat: 'dd/mm/yy',
-	    changeYear: true
-//	    	showOn: "button",
-//	        buttonImage: "http://jqueryui.com/resources/demos/datepicker/images/calendar.gif",
-//	        buttonImageOnly: true
+	    changeYear: true,
+	    constrainInput: true
 	 });
 	$('#fechaHasta').datepicker({
 		dateFormat: 'dd/mm/yy',
-		changeYear: true
-//		showOn: "button",
-//        buttonImage: "http://jqueryui.com/resources/demos/datepicker/images/calendar.gif",
-//        buttonImageOnly: true
+		changeYear: true,
+		constrainInput: true
 	 });
 	$("#opcionGrafico").on("change",function(e){
 		 $("#botonFiltrar").click();
@@ -399,7 +397,7 @@ jQuery(document).ready(function($) {
 			      date: true
 			    },
 			    "fechaHasta": {
-				      date: true
+				   date: true
 				 }
 			  }
 		});
