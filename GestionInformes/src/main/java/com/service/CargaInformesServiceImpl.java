@@ -105,14 +105,12 @@ public class CargaInformesServiceImpl implements CargaInformesService {
 								esIgual = false;
 							}
 						} catch (Exception e) {
-							// TODO: handle exception
+							CargaInformesServiceImpl.LOGGER.error("Error al procesar fecha", e);
 						}
 					}
 				}
 				if (esIgual) {
 					informesCorrectos.add(informe);
-
-					// TODO MIRAR SI EXISTE EL ID, Y SI EXISTE PONERLO COMO INCORRECTO
 				} else {
 					informesErroneos.add(informe);
 				}
@@ -131,33 +129,34 @@ public class CargaInformesServiceImpl implements CargaInformesService {
 
 	private Object procesarFecha(String nombreInforme) throws ParseException {
 		String[] nombre = nombreInforme.split("_");
-
-		String fecha = nombre[1];
 		Object rdo = null;
-		if (fecha != null && !"".equals(fecha)) {
-			if (fecha.matches(Constantes.PATTERN_FECHA_GUION_CORTA)) {
-				SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-				rdo = sdf.parse(fecha);
+		if (nombre.length > 1) {
+			String fecha = nombre[1];
 
-			} else if (fecha.matches(Constantes.PATTERN_FECHA_GUION)) {
-				SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yy");
-				Calendar cal = Calendar.getInstance();
-				cal.add(Calendar.YEAR, -100);
-				sdf.set2DigitYearStart(cal.getTime());
-				rdo = sdf.parse(fecha);
+			if (fecha != null && !"".equals(fecha)) {
+				if (fecha.matches(Constantes.PATTERN_FECHA_GUION_CORTA)) {
+					SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+					rdo = sdf.parse(fecha);
+
+				} else if (fecha.matches(Constantes.PATTERN_FECHA_GUION)) {
+					SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yy");
+					Calendar cal = Calendar.getInstance();
+					cal.add(Calendar.YEAR, -100);
+					sdf.set2DigitYearStart(cal.getTime());
+					rdo = sdf.parse(fecha);
+				}
+				if (fecha.matches(Constantes.PATTERN_FECHA_SEPARADOR_CORTA)) {
+					SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+					rdo = sdf.parse(fecha);
+
+				} else if (fecha.matches(Constantes.PATTERN_FECHA_SEPARADOR)) {
+					SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yy");
+					Calendar cal = Calendar.getInstance();
+					cal.add(Calendar.YEAR, -100);
+					sdf.set2DigitYearStart(cal.getTime());
+					rdo = sdf.parse(fecha);
+				}
 			}
-			if (fecha.matches(Constantes.PATTERN_FECHA_SEPARADOR_CORTA)) {
-				SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-				rdo = sdf.parse(fecha);
-
-			} else if (fecha.matches(Constantes.PATTERN_FECHA_SEPARADOR)) {
-				SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yy");
-				Calendar cal = Calendar.getInstance();
-				cal.add(Calendar.YEAR, -100);
-				sdf.set2DigitYearStart(cal.getTime());
-				rdo = sdf.parse(fecha);
-			}
-
 		}
 		return rdo;
 	}

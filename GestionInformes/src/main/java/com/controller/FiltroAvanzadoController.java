@@ -31,7 +31,7 @@ public class FiltroAvanzadoController {
 	}
 
 	@RequestMapping(value = "/filtroAvanzado", method = RequestMethod.POST)
-	public @ResponseBody() List<Informe> filtroBasico(@RequestBody() Informe informe) {
+	public @ResponseBody() List<Informe> filtroAvanzado(@RequestBody() Informe informe) {
 		FiltroAvanzadoController.LOGGER.info("[filtroAvanzado]");
 		return this.gesInformesService.buscarFiltroAvanzado(informe);
 	}

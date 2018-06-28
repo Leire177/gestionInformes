@@ -33,10 +33,4 @@
         <put-attribute name="body" value="/WEB-INF/jsp/gesInformesAvanzado/gesInformesAvanzado.jsp" />
         <put-attribute name="includes" value="/WEB-INF/jsp/gesInformesAvanzado/gesInformesAvanzado-includes.jsp" />  
     </definition> 
-  
-    <definition name="hello" extends="base.definition">  
-        <put-attribute name="title" value="Hello Spring MVC" />  
-        <put-attribute name="body" value="/WEB-INF/jsp/hello.jsp" />  
-    </definition>  
-  
 </tiles-definitions>  
