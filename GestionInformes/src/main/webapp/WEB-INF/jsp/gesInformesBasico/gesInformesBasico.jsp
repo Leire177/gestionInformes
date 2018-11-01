@@ -85,20 +85,24 @@
 		</form>
 	</fieldset>
 	<fieldset id="fieldsetGrafico" style="display: none;" class="fieldset">
-		<div>
+		<div class="row">
+		<div class="col-md-12 float-right">
 			<select id="opcionGrafico" class="form-control">
 				<option value="lines">Gráfico de lineas</option>
 				<option value="bars">Gráfico de barras</option>
 			</select>
 		</div>
-		<div>
+		</div>
+		<div class="row">
+		<div class="col-md-12 float-right">
 			<select id="opcionFechas" class="form-control">
 				<option value="anyos">Años</option>
 				<option value="meses">Meses</option>
 				<option value="dias">Días</option>
 			</select>
 		</div>
-		<div id="crearCamvas" class="col-md-7" >
+		</div>
+		<div id="crearCamvas" class="col-md-12" >
 		<div>
 			<canvas id="myChart"></canvas>
 		</div>

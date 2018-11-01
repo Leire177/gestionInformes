@@ -22,7 +22,6 @@ function fechasGrafico(fecha){
 	var rdo;
 	var split = fecha.split('/');
 	var date = new Date(split[2], split[1] - 1, split[0]); //Y M D 
-	debugger;
 	if($("#opcionFechas").val()=="anyos"){
 		rdo=date.getFullYear();
 	}
@@ -46,6 +45,9 @@ function dibujarGrafico(fechas,numInformes){
 	purple_orange_gradient.addColorStop(1, 'purple');
 	
 	if(grafico == undefined ||$("#opcionGrafico").val()=="lines" ){
+		if(grafico!=undefined){
+			grafico.destroy();
+		}
 		grafico = new Chart(ctx, {
 			  type: 'line',
 			  data: {
@@ -97,6 +99,7 @@ function dibujarGrafico(fechas,numInformes){
 		grafico.update();
 	}else{
 		if($("#opcionGrafico").val()=="bars"){
+			grafico.destroy();
 			grafico = new Chart(ctx, {
 				  type: 'bar',
 				  data: {
@@ -314,7 +317,9 @@ jQuery(document).ready(function($) {
 	$("#opcionFechas").on("change",function(e){
 		 $("#botonFiltrar").click();
 	});
-	
+	$("#opcionGrafico").on("change",function(e){
+		 $("#botonFiltrar").click();
+	});
 	$("#botonLimpiar").on("click",function(e){
 		 $("#listaEnf_form")[0].reset();
 	 });
